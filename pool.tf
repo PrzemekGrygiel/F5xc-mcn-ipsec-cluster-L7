@@ -5,6 +5,7 @@ resource "volterra_origin_pool" "ptf-remote-pool" {
   loadbalancer_algorithm = "LB_OVERRIDE"
   port                   = 80
   no_tls                 = true 
+  disable                = false
   
  origin_servers {
       private_ip {

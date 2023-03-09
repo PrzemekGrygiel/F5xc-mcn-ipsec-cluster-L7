@@ -55,8 +55,11 @@ resource "aws_subnet" "pg-vpc1-workload-az-c-subnet" {
   cidr_block              = "10.130.7.0/24"
   availability_zone       = format("%sc", var.aws_region)
 }
-
-
+resource "aws_subnet" "pg-vpc1-external-subnet" {
+  vpc_id                  = "${aws_vpc.pg-vpc1.id}"
+  cidr_block              = "10.130.254.0/24"
+  availability_zone       = format("%sc", var.aws_region)
+}
 
 resource "aws_security_group" "pg-vpc1-external-sg" {
   name        = format("pg-vpc1-external-%s-sg", var.projectPrefix)
@@ -82,10 +85,9 @@ resource "aws_security_group" "pg-vpc1-external-sg" {
   }
 }
 
-
 # Create permit all VPC security group
 resource "aws_security_group" "pg-vpc1-allow-all-sg" {
-  name        = format("pg-vpc1-allow-all-%s-1-sg", var.projectPrefix)
+  name        = format("pg-pg-vpc1-allow-all-%s-1-sg", var.projectPrefix)
   vpc_id      = "${aws_vpc.pg-vpc1.id}"
   description = "inbound traffic"
   ingress {
@@ -116,6 +118,11 @@ resource "aws_internet_gateway" "pg-vpc1-igw" {
   }
 }
 
+resource "aws_route" "pg-vpc1-external-rt" {
+  route_table_id         = aws_route_table.pg-vpc1-external-rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.pg-vpc1-igw.id
+}
 
 resource "aws_route" "pg-vpc1-external-rt-pcx1" {
   route_table_id         = aws_route_table.pg-vpc1-external-rt.id
@@ -135,3 +142,7 @@ resource "aws_route" "pg-vpc1-external-rt-pcx3" {
   gateway_id             = aws_vpc_peering_connection.peer-1-2.id
 }
 
+resource "aws_route_table_association" "pg-vpc1-external-association" {
+  subnet_id      = aws_subnet.pg-vpc1-external-subnet.id
+  route_table_id = aws_route_table.pg-vpc1-external-rt.id
+}

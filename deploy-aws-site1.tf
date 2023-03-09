@@ -14,15 +14,15 @@ resource "volterra_aws_vpc_site" "aws_site1" {
   }
 
   instance_type = var.aws_instance_type
-  
+
   ingress_egress_gw {
-    aws_certified_hw  = "aws-byol-multi-nic-voltmesh"
     sm_connection_pvt_ip = false
+    aws_certified_hw  = "aws-byol-multi-nic-voltmesh"
     inside_static_routes {
       static_route_list {
         simple_static_route = "10.130.1.0/24"
       }
-      static_route_list {
+     static_route_list {
         simple_static_route = "10.130.4.0/24"
       }
       static_route_list {
@@ -66,7 +66,7 @@ resource "volterra_aws_vpc_site" "aws_site1" {
         existing_subnet_id = aws_subnet.pg-vpc1-inside-az-c-subnet.id
       }
     }
-    
+  
     global_network_list {
       global_network_connections {
         sli_to_global_dr {
@@ -84,7 +84,6 @@ resource "volterra_aws_vpc_site" "aws_site1" {
       }
     }
   }
-
   lifecycle {
     ignore_changes = [ labels ]
   }
@@ -94,11 +93,11 @@ resource "volterra_aws_vpc_site" "aws_site1" {
 
 resource "volterra_cloud_site_labels" "label1" {
   name = volterra_aws_vpc_site.aws_site1.name
-   site_type = "aws_vpc_site"
+    site_type = "aws_vpc_site"
     labels = {
       pg-perf-label = "${var.dccg == true || var.via-re == true  ?  format("%s-null",var.projectPrefix) : var.projectPrefix}"
     }
-  ignore_on_delete = false
+  ignore_on_delete = true
 }
 
 resource "volterra_tf_params_action" "aws_site1" {
@@ -107,6 +106,5 @@ resource "volterra_tf_params_action" "aws_site1" {
   action           = "apply"
   wait_for_action  = true
   ignore_on_update = false
-
   depends_on = [volterra_aws_vpc_site.aws_site1]
 }
