@@ -15,6 +15,10 @@ variable "origin-pool-remote" {
   type = bool
   default = false
 }
+ variable "internet-vip" {
+   type = bool
+   default = false
+ }
 variable "vip-ip" {
   default = "10.10.10.10"
 }

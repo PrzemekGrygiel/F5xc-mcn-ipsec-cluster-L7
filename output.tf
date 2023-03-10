@@ -17,7 +17,7 @@ output "Client_Outside_subnet_az_c_id" {
   value = "${aws_subnet.pg-vpc1-outside-az-c-subnet.id}"
 }
 output "Client_VIP_IP" {
-    value = var.vip-ip
+    value = "${var.internet-vip == true ? "" : var.vip-ip}"
 }
 output "Client_HTTP_LB_name" {
   value = "${volterra_http_loadbalancer.ptf-http-lb.name}"
@@ -67,4 +67,7 @@ output "Server_Workload_subnet_az_c_id" {
 }
 output "Server_site_name" {
   value = volterra_aws_vpc_site.aws_site2.name
+}
+output "slo_internet_vip" {
+  value = data.aws_lb.internet-vip.dns_name
 }

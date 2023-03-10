@@ -33,8 +33,8 @@ resource "volterra_http_loadbalancer" "ptf-http-lb" {
         advertise_where {
             port = 80
             site  {
-              ip = var.vip-ip
-              network = "SITE_NETWORK_INSIDE"
+              ip = "${var.internet-vip == true ? "" : var.vip-ip}"
+              network = "${var.internet-vip == true ?  "SITE_NETWORK_OUTSIDE_WITH_INTERNET_VIP" : "SITE_NETWORK_INSIDE"}"
               site {
                 namespace =  "system"
                 name = volterra_aws_vpc_site.aws_site1.name
@@ -92,7 +92,6 @@ resource "volterra_http_loadbalancer" "ptf-https-lb" {
   default_route_pools {
     pool {
       namespace = var.namespace
-      #name = volterra_origin_pool.ptf-remote-pool.name
       name = "${var.origin-pool-remote == true ?  volterra_origin_pool.ptf-remote-pool.name : volterra_origin_pool.ptf-local-pool.name}"
     }
   }
@@ -100,8 +99,8 @@ resource "volterra_http_loadbalancer" "ptf-https-lb" {
         advertise_where {
             port = 443
             site  {
-              ip = var.vip-ip
-              network = "SITE_NETWORK_INSIDE"
+              ip = "${var.internet-vip == true ? "" : var.vip-ip}"
+              network = "${var.internet-vip == true ?  "SITE_NETWORK_OUTSIDE_WITH_INTERNET_VIP" : "SITE_NETWORK_INSIDE"}"
               site {
                 namespace =  "system"
                 name = volterra_aws_vpc_site.aws_site1.name

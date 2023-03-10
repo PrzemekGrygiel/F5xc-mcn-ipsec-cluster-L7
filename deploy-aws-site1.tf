@@ -87,7 +87,7 @@ resource "volterra_aws_vpc_site" "aws_site1" {
   lifecycle {
     ignore_changes = [ labels ]
   }
-
+  enable_internet_vip       = true
   logs_streaming_disabled   = true
 }
 
