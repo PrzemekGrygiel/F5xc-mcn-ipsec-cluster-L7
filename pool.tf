@@ -19,7 +19,7 @@ resource "volterra_origin_pool" "ptf-remote-pool" {
         }
       }
       private_ip {
-        ip = "10.131.4.201"
+        ip = "10.131.4.200"
         inside_network = true
         site_locator {
           site {
@@ -29,7 +29,7 @@ resource "volterra_origin_pool" "ptf-remote-pool" {
         }
       }
       private_ip {
-        ip = "10.131.7.202"
+        ip = "10.131.7.200"
         inside_network = true
         site_locator {
           site {
@@ -62,7 +62,7 @@ resource "volterra_origin_pool" "ptf-local-pool" {
         }
       }
       private_ip {
-        ip = "10.130.4.201"
+        ip = "10.130.4.200"
         inside_network = true
         site_locator {
           site {
@@ -72,7 +72,7 @@ resource "volterra_origin_pool" "ptf-local-pool" {
         }
       }
       private_ip {
-        ip = "10.130.7.202"
+        ip = "10.130.7.200"
         inside_network = true
         site_locator {
           site {
