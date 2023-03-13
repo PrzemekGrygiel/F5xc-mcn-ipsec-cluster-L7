@@ -5,7 +5,7 @@ resource "aws_vpc" "pg-vpc1" {
   }
   cidr_block           = "${var.vpc1_cidr_block}"
   enable_dns_support   = true
-  enable_dns_hostnames = false
+  enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "pg-vpc1-inside-az-a-subnet" {

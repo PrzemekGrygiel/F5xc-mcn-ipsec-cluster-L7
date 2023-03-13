@@ -48,7 +48,7 @@ variable aws_instance_type {
 }
 
 variable projectPrefix {
-  default = "pg-cluster-test-ptf"
+  default = "pg-cluster-test"
 }
 
 variable namespace {
