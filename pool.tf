@@ -4,42 +4,42 @@ resource "volterra_origin_pool" "ptf-remote-pool" {
   endpoint_selection     = "DISTRIBUTED"
   loadbalancer_algorithm = "LB_OVERRIDE"
   port                   = 80
-  no_tls                 = true 
+  no_tls                 = true
   disable                = false
-  
- origin_servers {
-      private_ip {
-        ip = "10.131.1.200"
-        inside_network = true
-        site_locator {
-          site {
-            namespace = "system"
-            name      = volterra_aws_vpc_site.aws_site2.name
-          }
+
+  origin_servers {
+    private_ip {
+      ip             = "10.131.1.200"
+      inside_network = true
+      site_locator {
+        site {
+          namespace = "system"
+          name      = volterra_aws_vpc_site.aws_site2.name
         }
       }
-      private_ip {
-        ip = "10.131.4.200"
-        inside_network = true
-        site_locator {
-          site {
-            namespace = "system"
-            name      = volterra_aws_vpc_site.aws_site2.name
-          }
+    }
+    private_ip {
+      ip             = "10.131.4.200"
+      inside_network = true
+      site_locator {
+        site {
+          namespace = "system"
+          name      = volterra_aws_vpc_site.aws_site2.name
         }
       }
-      private_ip {
-        ip = "10.131.7.200"
-        inside_network = true
-        site_locator {
-          site {
-            namespace = "system"
-            name      = volterra_aws_vpc_site.aws_site2.name
-          }
+    }
+    private_ip {
+      ip             = "10.131.7.200"
+      inside_network = true
+      site_locator {
+        site {
+          namespace = "system"
+          name      = volterra_aws_vpc_site.aws_site2.name
         }
       }
+    }
   }
-depends_on = [volterra_tf_params_action.aws_site2]
+  depends_on = [volterra_tf_params_action.aws_site2]
 }
 
 resource "volterra_origin_pool" "ptf-local-pool" {
@@ -48,39 +48,39 @@ resource "volterra_origin_pool" "ptf-local-pool" {
   endpoint_selection     = "DISTRIBUTED"
   loadbalancer_algorithm = "LB_OVERRIDE"
   port                   = 80
-  no_tls                 = true 
-  
- origin_servers {
-      private_ip {
-        ip = "10.130.1.200"
-        inside_network = true
-        site_locator {
-          site {
-            namespace = "system"
-            name      = volterra_aws_vpc_site.aws_site1.name
-          }
+  no_tls                 = true
+
+  origin_servers {
+    private_ip {
+      ip             = "10.130.1.200"
+      inside_network = true
+      site_locator {
+        site {
+          namespace = "system"
+          name      = volterra_aws_vpc_site.aws_site1.name
         }
       }
-      private_ip {
-        ip = "10.130.4.200"
-        inside_network = true
-        site_locator {
-          site {
-            namespace = "system"
-            name      = volterra_aws_vpc_site.aws_site1.name
-          }
+    }
+    private_ip {
+      ip             = "10.130.4.200"
+      inside_network = true
+      site_locator {
+        site {
+          namespace = "system"
+          name      = volterra_aws_vpc_site.aws_site1.name
         }
       }
-      private_ip {
-        ip = "10.130.7.200"
-        inside_network = true
-        site_locator {
-          site {
-            namespace = "system"
-            name      = volterra_aws_vpc_site.aws_site1.name
-          }
+    }
+    private_ip {
+      ip             = "10.130.7.200"
+      inside_network = true
+      site_locator {
+        site {
+          namespace = "system"
+          name      = volterra_aws_vpc_site.aws_site1.name
         }
       }
+    }
   }
-depends_on = [volterra_tf_params_action.aws_site1]
+  depends_on = [volterra_tf_params_action.aws_site1]
 }
